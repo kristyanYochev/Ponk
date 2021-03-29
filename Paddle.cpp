@@ -26,7 +26,7 @@ void Paddle::update(float deltaTime)
 
     currentPos.y += yVelocity * deltaTime;
     if (currentPos.y < 0) currentPos.y = 0;
-    if (currentPos.y + size.y > SCREEN_HEIGHT) currentPos.y = SCREEN_HEIGHT - size.y;
+    if (currentPos.y + size.y > SCREEN_SIZE.y) currentPos.y = SCREEN_SIZE.y - size.y;
 
     sprite.setPosition(currentPos);
 }
