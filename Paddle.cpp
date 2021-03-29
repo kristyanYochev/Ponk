@@ -1,4 +1,5 @@
 #include "Paddle.h"
+#include "Common.h"
 
 Paddle::Paddle(float xPos, float maxSpeed, const sf::Vector2f& size)
         :
@@ -18,7 +19,14 @@ void Paddle::handleInput()
 
 void Paddle::update(float deltaTime)
 {
-    sprite.move(0, yVelocity * deltaTime);
+    sf::Vector2f currentPos = sprite.getPosition();
+    const sf::Vector2f& size = sprite.getSize();
+
+    currentPos.y += yVelocity * deltaTime;
+    if (currentPos.y < 0) currentPos.y = 0;
+    if (currentPos.y + size.y > SCREEN_HEIGHT) currentPos.y = SCREEN_HEIGHT - size.y;
+
+    sprite.setPosition(currentPos);
 }
 
 void Paddle::render(sf::RenderWindow& window)

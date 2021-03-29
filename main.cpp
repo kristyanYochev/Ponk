@@ -1,9 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include "Paddle.h"
+#include "Common.h"
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Ponk");
+    sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Ponk");
 
     Paddle paddle(50.f, 2000.f, sf::Vector2f(10.f, 100.f));
 
