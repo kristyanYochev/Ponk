@@ -1,11 +1,13 @@
 #include "Paddle.h"
 #include "Common.h"
 
-Paddle::Paddle(float xPos, float maxSpeed, const sf::Vector2f& size)
+Paddle::Paddle(float xPos, float maxSpeed, const sf::Vector2f& size, sf::Keyboard::Key upKey, sf::Keyboard::Key downKey)
         :
         maxSpeed(maxSpeed),
         sprite(size),
-        yVelocity(0)
+        yVelocity(0),
+        upKey(upKey),
+        downKey(downKey)
 {
     sprite.setPosition(xPos, 0.f);
 }
@@ -13,8 +15,8 @@ Paddle::Paddle(float xPos, float maxSpeed, const sf::Vector2f& size)
 void Paddle::handleInput()
 {
     yVelocity = 0;
-    yVelocity += sf::Keyboard::isKeyPressed(sf::Keyboard::S) ? maxSpeed : 0;
-    yVelocity += sf::Keyboard::isKeyPressed(sf::Keyboard::W) ? -maxSpeed : 0;
+    yVelocity += sf::Keyboard::isKeyPressed(downKey) ? maxSpeed : 0;
+    yVelocity += sf::Keyboard::isKeyPressed(upKey) ? -maxSpeed : 0;
 }
 
 void Paddle::update(float deltaTime)
