@@ -1,6 +1,7 @@
 #include "Ball.h"
 #include "Common.h"
 #include "Math.h"
+#include <iostream>
 
 const double halfRootTwo = 0.7071067811865476;
 
@@ -24,8 +25,15 @@ void Ball::start()
 void Ball::update(float deltaTime)
 {
     sf::Vector2f currentPos = sprite.getPosition();
+    const sf::Vector2f size = sprite.getSize();
     currentPos += velocity * deltaTime;
+
+    if (currentPos.y < 0 || currentPos.y + size.y > SCREEN_SIZE.y) velocity.y = -velocity.y;
+    if (currentPos.x < 0 || currentPos.x + size.x > SCREEN_SIZE.x) velocity.x = -velocity.x;
+
     sprite.setPosition(currentPos);
+
+    std::cout << velocity.x << ", " << velocity.y << std::endl;
 }
 
 void Ball::render(sf::RenderWindow& window)
