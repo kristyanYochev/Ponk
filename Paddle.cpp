@@ -32,3 +32,8 @@ void Paddle::render(sf::RenderWindow& window, float interpolationFactor)
     sprite.setPosition(position + sf::Vector2f(0, yVelocity) * interpolationFactor);
     window.draw(sprite);
 }
+
+sf::FloatRect Paddle::boundingRect() const
+{
+    return {position, sprite.getSize()};
+}

@@ -17,6 +17,7 @@ public:
     void handleInput();
     void update(float deltaTime);
     void render(sf::RenderWindow& window, float interpolationFactor);
+    sf::FloatRect boundingRect() const;
 private:
     sf::RectangleShape sprite;
     sf::Keyboard::Key upKey;
