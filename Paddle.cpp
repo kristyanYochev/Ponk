@@ -7,10 +7,9 @@ Paddle::Paddle(float xPos, float maxSpeed, const sf::Vector2f& size, sf::Keyboar
         sprite(size),
         yVelocity(0),
         upKey(upKey),
-        downKey(downKey)
-{
-    sprite.setPosition(xPos, 0.f);
-}
+        downKey(downKey),
+        position(xPos, 0.f)
+{ }
 
 void Paddle::handleInput()
 {
@@ -21,17 +20,15 @@ void Paddle::handleInput()
 
 void Paddle::update(float deltaTime)
 {
-    sf::Vector2f currentPos = sprite.getPosition();
     const sf::Vector2f& size = sprite.getSize();
 
-    currentPos.y += yVelocity * deltaTime;
-    if (currentPos.y < 0) currentPos.y = 0;
-    if (currentPos.y + size.y > SCREEN_SIZE.y) currentPos.y = SCREEN_SIZE.y - size.y;
-
-    sprite.setPosition(currentPos);
+    position.y += yVelocity * deltaTime;
+    if (position.y < 0) position.y = 0;
+    if (position.y + size.y > SCREEN_SIZE.y) position.y = SCREEN_SIZE.y - size.y;
 }
 
-void Paddle::render(sf::RenderWindow& window)
+void Paddle::render(sf::RenderWindow& window, float interpolationFactor)
 {
+    sprite.setPosition(position + sf::Vector2f(0, yVelocity) * interpolationFactor);
     window.draw(sprite);
 }

@@ -16,12 +16,18 @@ int main()
             sf::Keyboard::Down
     );
 
-    Ball ball(1500.f);
+    Ball ball(1000.f);
 
     sf::Clock clk;
 
+    const float updateTimestep = 1 / 50.f;
+    float lag = 0;
+
     while (window.isOpen())
     {
+        lag += clk.getElapsedTime().asSeconds();
+        clk.restart();
+
         sf::Event event{};
         while (window.pollEvent(event))
         {
@@ -33,17 +39,18 @@ int main()
         paddle.handleInput();
         secondPaddle.handleInput();
 
-        const float deltaTime = clk.getElapsedTime().asSeconds();
-        clk.restart();
-
-        paddle.update(deltaTime);
-        secondPaddle.update(deltaTime);
-        ball.update(deltaTime);
+        while (lag >= updateTimestep)
+        {
+            paddle.update(updateTimestep);
+            secondPaddle.update(updateTimestep);
+            ball.update(updateTimestep);
+            lag -= updateTimestep;
+        }
 
         window.clear();
-        paddle.render(window);
-        secondPaddle.render(window);
-        ball.render(window);
+        paddle.render(window, lag);
+        secondPaddle.render(window, lag);
+        ball.render(window, lag);
         window.display();
     }
 

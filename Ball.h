@@ -10,11 +10,12 @@ public:
 
     void start();
     void update(float deltaTime);
-    void render(sf::RenderWindow& window);
+    void render(sf::RenderWindow& window, float interpolationFactor);
 private:
     const float maxSpeed;
     sf::RectangleShape sprite;
     sf::Vector2f velocity;
+    sf::Vector2f position;
 };
 
 #endif //PONK_BALL_H
