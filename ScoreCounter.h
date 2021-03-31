@@ -3,16 +3,20 @@
 
 #include <SFML/Graphics.hpp>
 
+class Game;
+
 class ScoreCounter
 {
 public:
-    explicit ScoreCounter(sf::Font& font, const sf::Vector2f& screenSize);
+    ScoreCounter(sf::Font& font, Game& game, unsigned maxScore);
     void scoreForP1();
     void scoreForP2();
     void render(sf::RenderWindow& window);
 
 private:
-    int _player1Score, _player2Score;
+    unsigned _player1Score, _player2Score;
+    const unsigned _maxScore;
+    Game& _game;
     sf::Text _player1ScoreText, _player2ScoreText;
 };
 

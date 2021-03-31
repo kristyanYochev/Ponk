@@ -20,6 +20,7 @@ public:
     void scoreForP1();
     void scoreForP2();
 
+    void playerWon(unsigned playerNumber);
 private:
     sf::RenderWindow _window;
     const sf::Vector2f _screenSize;

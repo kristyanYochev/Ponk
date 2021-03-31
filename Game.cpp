@@ -13,7 +13,7 @@ Game::Game(sf::Vector2f screenSize, sf::Font& scoreCounterFont)
                 sf::Keyboard::Up,
                 sf::Keyboard::Down
         ),
-        _counter(scoreCounterFont, screenSize),
+        _counter(scoreCounterFont, *this, 10),
         _ball(1000.f, *this)
 { }
 
@@ -84,4 +84,9 @@ void Game::scoreForP2()
 {
     _counter.scoreForP2();
     _ball.reset();
+}
+
+void Game::playerWon(unsigned int playerNumber)
+{
+    _window.close();
 }
