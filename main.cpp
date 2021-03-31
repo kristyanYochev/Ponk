@@ -2,6 +2,7 @@
 #include "Paddle.h"
 #include "Common.h"
 #include "Ball.h"
+#include "ScoreCounter.h"
 
 int main()
 {
@@ -16,7 +17,11 @@ int main()
             sf::Keyboard::Down
     );
 
-    Ball ball(1000.f, paddle, secondPaddle);
+    sf::Font bitFont;
+    bitFont.loadFromFile("Assets/Fonts/bit5x3.ttf");
+    ScoreCounter counter(bitFont);
+
+    Ball ball(1000.f, paddle, secondPaddle, counter);
 
     sf::Clock clk;
 
@@ -48,9 +53,12 @@ int main()
         }
 
         window.clear();
+
         paddle.render(window, lag);
         secondPaddle.render(window, lag);
         ball.render(window, lag);
+        counter.render(window);
+
         window.display();
     }
 
