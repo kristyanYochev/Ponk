@@ -14,13 +14,19 @@ public:
     void run();
     const sf::Vector2f& screenSize() const;
 
+    const Paddle& paddle1();
+    const Paddle& paddle2();
+
+    void scoreForP1();
+    void scoreForP2();
+
 private:
-    sf::RenderWindow window;
+    sf::RenderWindow _window;
     const sf::Vector2f _screenSize;
-    Paddle paddle1;
-    Paddle paddle2;
-    Ball ball;
-    ScoreCounter counter;
+    Paddle _paddle1;
+    Paddle _paddle2;
+    Ball _ball;
+    ScoreCounter _counter;
 };
 
 #endif //PONK_GAME_H

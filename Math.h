@@ -5,13 +5,21 @@
 #include <cmath>
 
 template<typename T>
-T lengthSquared(sf::Vector2<T> v) {
+inline constexpr T lengthSquared(sf::Vector2<T> v)
+{
     return v.x*v.x + v.y*v.y;
 }
 
 template<typename T>
-T length(sf::Vector2<T> v) {
+inline constexpr T length(sf::Vector2<T> v)
+{
     return std::sqrt(lengthSquared(v));
+}
+
+template<typename T>
+inline constexpr T sgn(T val)
+{
+    return (T(0) < val) - (val < T(0));
 }
 
 #endif //PONK_MATH_H

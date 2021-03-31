@@ -1,39 +1,47 @@
 #include "Paddle.h"
-#include "Common.h"
+#include "Game.h"
 
-Paddle::Paddle(float xPos, float maxSpeed, const sf::Vector2f& size, sf::Keyboard::Key upKey, sf::Keyboard::Key downKey)
+Paddle::Paddle(
+        float xPos,
+        float maxSpeed,
+        const sf::Vector2f& size,
+        Game& game,
+        sf::Keyboard::Key upKey,
+        sf::Keyboard::Key downKey
+)
         :
-        maxSpeed(maxSpeed),
-        sprite(size),
-        yVelocity(0),
-        upKey(upKey),
-        downKey(downKey),
-        position(xPos, 0.f)
+        _maxSpeed(maxSpeed),
+        _sprite(size),
+        _yVelocity(0),
+        _upKey(upKey),
+        _downKey(downKey),
+        _position(xPos, 0.f),
+        _game(game)
 { }
 
 void Paddle::handleInput()
 {
-    yVelocity = 0;
-    yVelocity += sf::Keyboard::isKeyPressed(downKey) ? maxSpeed : 0;
-    yVelocity += sf::Keyboard::isKeyPressed(upKey) ? -maxSpeed : 0;
+    _yVelocity = 0;
+    _yVelocity += sf::Keyboard::isKeyPressed(_downKey) ? _maxSpeed : 0;
+    _yVelocity += sf::Keyboard::isKeyPressed(_upKey) ? -_maxSpeed : 0;
 }
 
 void Paddle::update(float deltaTime)
 {
-    const sf::Vector2f& size = sprite.getSize();
+    const sf::Vector2f& size = _sprite.getSize();
 
-    position.y += yVelocity * deltaTime;
-    if (position.y < 0) position.y = 0;
-    if (position.y + size.y > SCREEN_SIZE.y) position.y = SCREEN_SIZE.y - size.y;
+    _position.y += _yVelocity * deltaTime;
+    if (_position.y < 0) _position.y = 0;
+    if (_position.y + size.y > _game.screenSize().y) _position.y = _game.screenSize().y - size.y;
 }
 
 void Paddle::render(sf::RenderWindow& window, float interpolationFactor)
 {
-    sprite.setPosition(position + sf::Vector2f(0, yVelocity) * interpolationFactor);
-    window.draw(sprite);
+    _sprite.setPosition(_position + sf::Vector2f(0, _yVelocity) * interpolationFactor);
+    window.draw(_sprite);
 }
 
 sf::FloatRect Paddle::boundingRect() const
 {
-    return {position, sprite.getSize()};
+    return {_position, _sprite.getSize()};
 }
