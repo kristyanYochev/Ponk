@@ -27,10 +27,29 @@ void Ball::start()
 
 void Ball::update(float deltaTime)
 {
-    const sf::Vector2f size = sprite.getSize();
     position += velocity * deltaTime;
 
-    if (position.y < 0 || position.y + size.y > SCREEN_SIZE.y) velocity.y = -velocity.y;
+    handleScreenBorderCollision();
+
+    handlePaddleCollision(paddle1);
+    handlePaddleCollision(paddle2);
+}
+
+void Ball::handleScreenBorderCollision()
+{
+    const sf::Vector2f size = sprite.getSize();
+    if (position.y < 0)
+    {
+        velocity.y = -velocity.y;
+        position.y = 0;
+    }
+
+    if (position.y + size.y > SCREEN_SIZE.y)
+    {
+        velocity.y = -velocity.y;
+        position.y = SCREEN_SIZE.y - size.y;
+    }
+
     if (position.x < 0)
     {
         velocity.x = -velocity.x;
@@ -44,9 +63,6 @@ void Ball::update(float deltaTime)
         reset();
         counter.scoreForP1();
     }
-
-    handlePaddleCollision(paddle1);
-    handlePaddleCollision(paddle2);
 }
 
 void Ball::render(sf::RenderWindow& window, float interpolationFactor)

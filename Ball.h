@@ -18,7 +18,7 @@ private:
     bool collidesWith(const Paddle& paddle, sf::FloatRect& intersection) const;
     sf::FloatRect boundingRect() const;
     void handlePaddleCollision(const Paddle& paddle);
-
+    void handleScreenBorderCollision();
     void reset();
 
     const float maxSpeed;
@@ -28,6 +28,7 @@ private:
     const Paddle& paddle1;
     const Paddle& paddle2;
     ScoreCounter& counter;
+
 };
 
 #endif //PONK_BALL_H
