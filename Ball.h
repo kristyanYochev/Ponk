@@ -14,6 +14,7 @@ public:
     void start();
     void update(float deltaTime);
     void render(sf::RenderWindow& window, float interpolationFactor);
+
 private:
     bool collidesWith(const Paddle& paddle, sf::FloatRect& intersection) const;
     sf::FloatRect boundingRect() const;
@@ -28,7 +29,6 @@ private:
     const Paddle& paddle1;
     const Paddle& paddle2;
     ScoreCounter& counter;
-
 };
 
 #endif //PONK_BALL_H
