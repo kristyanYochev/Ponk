@@ -11,13 +11,15 @@
 class Game
 {
 public:
-    Game(sf::Vector2f screenSize, sf::Font& scoreCounterFont);
+    Game(sf::Vector2f screenSize, sf::Font& font);
 
     void run();
     const sf::Vector2f& screenSize() const;
+    sf::Font& font();
     sf::RenderWindow& window();
 private:
     sf::RenderWindow _window;
+    sf::Font& _font;
     const sf::Vector2f _screenSize;
     std::unique_ptr<GameScreen> _currentScreen;
 };

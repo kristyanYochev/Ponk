@@ -1,7 +1,8 @@
 #include "MainGameScreen.h"
 #include "Game.h"
+#include "PlayerWinsScreen.h"
 
-MainGameScreen::MainGameScreen(Game& game, sf::Font& scoreCounterFont)
+MainGameScreen::MainGameScreen(Game& game)
         :
         _game(game),
         _window(game.window()),
@@ -14,7 +15,7 @@ MainGameScreen::MainGameScreen(Game& game, sf::Font& scoreCounterFont)
                 sf::Keyboard::Up,
                 sf::Keyboard::Down
         ),
-        _counter(scoreCounterFont, *this, 10),
+        _counter(game.font(), *this, 10),
         _ball(1000.f, *this)
 { }
 
@@ -25,7 +26,7 @@ std::unique_ptr<GameScreen> MainGameScreen::show()
     const float updateTimestep = 1 / 120.f;
     float lag = 0;
 
-    while (_window.isOpen())
+    while (_window.isOpen() && _winningPlayer == -1)
     {
         lag += clk.getElapsedTime().asSeconds();
         clk.restart();
@@ -59,6 +60,8 @@ std::unique_ptr<GameScreen> MainGameScreen::show()
         _window.display();
     }
 
+    if (_winningPlayer != -1) return std::make_unique<PlayerWinsScreen>(_winningPlayer, _game);
+
     return {nullptr};
 }
 
@@ -91,6 +94,6 @@ void MainGameScreen::scoreForP2()
 
 void MainGameScreen::playerWon(unsigned int playerNumber)
 {
-    _window.close();
+    _winningPlayer = static_cast<int>(playerNumber);
 }
 

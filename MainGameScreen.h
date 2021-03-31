@@ -12,8 +12,7 @@ class Game;
 class MainGameScreen : public GameScreen
 {
 public:
-    explicit MainGameScreen(Game& game, sf::Font& scoreCounterFont);
-    ~MainGameScreen() override = default;
+    explicit MainGameScreen(Game& game);
 
     std::unique_ptr<GameScreen> show() override;
 
@@ -33,6 +32,7 @@ private:
     Paddle _paddle2;
     Ball _ball;
     ScoreCounter _counter;
+    int _winningPlayer = -1;
 };
 
 #endif //PONK_MAINGAMESCREEN_H

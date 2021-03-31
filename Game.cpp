@@ -2,19 +2,22 @@
 #include "GameScreen.h"
 #include "MainGameScreen.h"
 
-Game::Game(sf::Vector2f screenSize, sf::Font& scoreCounterFont)
+Game::Game(sf::Vector2f screenSize, sf::Font& font)
         :
         _screenSize(screenSize),
         _window(sf::VideoMode(screenSize.x, screenSize.y), "Ponk"),
-        _currentScreen(std::make_unique<MainGameScreen>(*this, scoreCounterFont))
+        _currentScreen(std::make_unique<MainGameScreen>(*this)),
+        _font(font)
 { }
 
 void Game::run()
 {
-    while (_currentScreen)
+    while (_currentScreen && _window.isOpen())
     {
         _currentScreen = _currentScreen->show();
     }
+
+    _window.close();
 }
 
 const sf::Vector2f& Game::screenSize() const
@@ -25,4 +28,9 @@ const sf::Vector2f& Game::screenSize() const
 sf::RenderWindow& Game::window()
 {
     return _window;
+}
+
+sf::Font& Game::font()
+{
+    return _font;
 }
