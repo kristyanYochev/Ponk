@@ -1,10 +1,12 @@
 #ifndef PONK_GAME_H
 #define PONK_GAME_H
 
+#include <memory>
 #include <SFML/Graphics.hpp>
 #include "Paddle.h"
 #include "Ball.h"
 #include "ScoreCounter.h"
+#include "GameScreen.h"
 
 class Game
 {
@@ -13,21 +15,11 @@ public:
 
     void run();
     const sf::Vector2f& screenSize() const;
-
-    const Paddle& paddle1();
-    const Paddle& paddle2();
-
-    void scoreForP1();
-    void scoreForP2();
-
-    void playerWon(unsigned playerNumber);
+    sf::RenderWindow& window();
 private:
     sf::RenderWindow _window;
     const sf::Vector2f _screenSize;
-    Paddle _paddle1;
-    Paddle _paddle2;
-    Ball _ball;
-    ScoreCounter _counter;
+    std::unique_ptr<GameScreen> _currentScreen;
 };
 
 #endif //PONK_GAME_H

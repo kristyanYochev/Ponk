@@ -1,17 +1,17 @@
 #include "Ball.h"
 #include "Math.h"
 #include "Paddle.h"
-#include "Game.h"
+#include "MainGameScreen.h"
 
 const double halfRootTwo = 0.7071067811865476;
 
-Ball::Ball(float maxSpeed, Game& game, float size)
+Ball::Ball(float maxSpeed, MainGameScreen& mainGameScreen, float size)
         :
         _maxSpeed(maxSpeed),
         _sprite(sf::Vector2f(size, size)),
         _velocity(0, 0),
-        _position((game.screenSize() - _sprite.getSize()) / 2.f),
-        _game(game)
+        _position((mainGameScreen.screenSize() - _sprite.getSize()) / 2.f),
+        _mainGameScreen(mainGameScreen)
 { }
 
 void Ball::start()
@@ -28,13 +28,13 @@ void Ball::update(float deltaTime)
 
     handleScreenBorderCollision();
 
-    handlePaddleCollision(_game.paddle1());
-    handlePaddleCollision(_game.paddle2());
+    handlePaddleCollision(_mainGameScreen.paddle1());
+    handlePaddleCollision(_mainGameScreen.paddle2());
 }
 
 void Ball::handleScreenBorderCollision()
 {
-    const auto screenSize = _game.screenSize();
+    const auto screenSize = _mainGameScreen.screenSize();
     const sf::Vector2f spriteSize = _sprite.getSize();
 
     if (_position.y < 0)
@@ -52,13 +52,13 @@ void Ball::handleScreenBorderCollision()
     if (_position.x < 0)
     {
         _velocity.x = -_velocity.x;
-        _game.scoreForP2();
+        _mainGameScreen.scoreForP2();
     }
 
     if (_position.x + spriteSize.x > screenSize.x)
     {
         _velocity.x = -_velocity.x;
-        _game.scoreForP1();
+        _mainGameScreen.scoreForP1();
     }
 }
 
@@ -95,6 +95,6 @@ void Ball::handlePaddleCollision(const Paddle& paddle)
 
 void Ball::reset()
 {
-    _position = (_game.screenSize() - _sprite.getSize()) / 2.f;
+    _position = (_mainGameScreen.screenSize() - _sprite.getSize()) / 2.f;
     _velocity = sf::Vector2f(0, 0);
 }

@@ -16,7 +16,7 @@ Paddle::Paddle(
         _upKey(upKey),
         _downKey(downKey),
         _position(xPos, 0.f),
-        _game(game)
+        _screenSize(game.screenSize())
 { }
 
 void Paddle::handleInput()
@@ -32,7 +32,7 @@ void Paddle::update(float deltaTime)
 
     _position.y += _yVelocity * deltaTime;
     if (_position.y < 0) _position.y = 0;
-    if (_position.y + size.y > _game.screenSize().y) _position.y = _game.screenSize().y - size.y;
+    if (_position.y + size.y > _screenSize.y) _position.y = _screenSize.y - size.y;
 }
 
 void Paddle::render(sf::RenderWindow& window, float interpolationFactor)

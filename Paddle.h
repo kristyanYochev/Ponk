@@ -29,7 +29,7 @@ private:
     const float _maxSpeed;
     float _yVelocity;
     sf::Vector2f _position;
-    Game& _game;
+    const sf::Vector2f _screenSize;
 };
 
 #endif //PONK_PADDLE_H

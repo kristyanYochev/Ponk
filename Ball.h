@@ -3,13 +3,13 @@
 
 #include <SFML/Graphics.hpp>
 
-class Game;
+class MainGameScreen;
 class Paddle;
 
 class Ball
 {
 public:
-    Ball(float maxSpeed, Game& game, float size = 10.f);
+    Ball(float maxSpeed, MainGameScreen& mainGameScreen, float size = 10.f);
 
     void start();
     void update(float deltaTime);
@@ -26,7 +26,7 @@ private:
     sf::RectangleShape _sprite;
     sf::Vector2f _velocity;
     sf::Vector2f _position;
-    Game& _game;
+    MainGameScreen& _mainGameScreen;
 };
 
 #endif //PONK_BALL_H
