@@ -15,8 +15,8 @@ ScoreCounter::ScoreCounter(sf::Font& font, MainGameScreen& mainGameScreen, unsig
 
     const sf::Vector2f& screenSize = mainGameScreen.screenSize();
 
-    _player1ScoreText.setPosition(screenSize.x / 4.f, screenSize.y / 10.f);
-    _player2ScoreText.setPosition(screenSize.x * 3.f / 4.f, screenSize.y / 10.f);
+    _player1ScoreText.setPosition(screenSize.x / 4.f, screenSize.y / 20.f);
+    _player2ScoreText.setPosition(screenSize.x * 3.f / 4.f, screenSize.y / 20.f);
 
     _player1ScoreText.setScale(3.f, 3.f);
     _player2ScoreText.setScale(3.f, 3.f);

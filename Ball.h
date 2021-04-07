@@ -16,10 +16,12 @@ public:
     void render(sf::RenderWindow& window, float interpolationFactor);
 
     void reset();
+
+    sf::FloatRect boundingRect() const;
+    Paddle * lastHitPaddle();
 private:
     bool collidesWith(const Paddle& paddle, sf::FloatRect& intersection) const;
-    sf::FloatRect boundingRect() const;
-    void handlePaddleCollision(const Paddle& paddle);
+    void handlePaddleCollision(Paddle& paddle);
     void handleScreenBorderCollision();
 
     const float _maxSpeed;
@@ -27,6 +29,7 @@ private:
     sf::Vector2f _velocity;
     sf::Vector2f _position;
     MainGameScreen& _mainGameScreen;
+    Paddle * _lastHitPaddle;
 };
 
 #endif //PONK_BALL_H

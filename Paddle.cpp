@@ -1,5 +1,6 @@
 #include "Paddle.h"
 #include "Game.h"
+#include "PowerUp.h"
 
 Paddle::Paddle(
         float xPos,
@@ -28,11 +29,11 @@ void Paddle::handleInput()
 
 void Paddle::update(float deltaTime)
 {
-    const sf::Vector2f& size = _sprite.getSize();
+    float height = _sprite.getGlobalBounds().height;
 
     _position.y += _yVelocity * deltaTime;
     if (_position.y < 0) _position.y = 0;
-    if (_position.y + size.y > _screenSize.y) _position.y = _screenSize.y - size.y;
+    if (_position.y + height > _screenSize.y) _position.y = _screenSize.y - height;
 }
 
 void Paddle::render(sf::RenderWindow& window, float interpolationFactor)
@@ -43,5 +44,30 @@ void Paddle::render(sf::RenderWindow& window, float interpolationFactor)
 
 sf::FloatRect Paddle::boundingRect() const
 {
-    return {_position, _sprite.getSize()};
+    return _sprite.getGlobalBounds();
+}
+
+void Paddle::scaleSpeed(float amount)
+{
+    _maxSpeed *= amount;
+}
+
+void Paddle::setHeightScale(float amount)
+{
+    _sprite.setScale(1, amount);
+}
+
+void Paddle::applyPowerUp(std::unique_ptr<PowerUp> powerUp)
+{
+    removeAppliedPowerUp();
+    powerUp->applyTo(this);
+    _appliedPowerUp = std::move(powerUp);
+}
+
+void Paddle::removeAppliedPowerUp()
+{
+    if (!_appliedPowerUp) return;
+
+    _appliedPowerUp->removeFrom(this);
+    _appliedPowerUp = nullptr;
 }

@@ -11,7 +11,8 @@ Ball::Ball(float maxSpeed, MainGameScreen& mainGameScreen, float size)
         _sprite(sf::Vector2f(size, size)),
         _velocity(0, 0),
         _position((mainGameScreen.screenSize() - _sprite.getSize()) / 2.f),
-        _mainGameScreen(mainGameScreen)
+        _mainGameScreen(mainGameScreen),
+        _lastHitPaddle(nullptr)
 { }
 
 void Ball::start()
@@ -78,12 +79,13 @@ sf::FloatRect Ball::boundingRect() const
     return {_position, _sprite.getSize()};
 }
 
-void Ball::handlePaddleCollision(const Paddle& paddle)
+void Ball::handlePaddleCollision(Paddle& paddle)
 {
     sf::FloatRect intersection;
     const float deflectionFactor = 1000.f;
     if (collidesWith(paddle, intersection))
     {
+        _lastHitPaddle = &paddle;
         const float collisionPointY = intersection.top;
         const float paddleCenterY = paddle.boundingRect().top + paddle.boundingRect().height / 2.f;
 
@@ -97,4 +99,10 @@ void Ball::reset()
 {
     _position = (_mainGameScreen.screenSize() - _sprite.getSize()) / 2.f;
     _velocity = sf::Vector2f(0, 0);
+    _lastHitPaddle = nullptr;
+}
+
+Paddle* Ball::lastHitPaddle()
+{
+    return _lastHitPaddle;
 }
