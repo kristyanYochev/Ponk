@@ -138,13 +138,15 @@ std::unique_ptr<PowerUp> MainGameScreen::generatePowerUp()
         return std::make_unique<SizePowerUp>(
                 _game.powerUpTexture(selectedType),
                 sf::Vector2f(distX(_randomEngine), distY(_randomEngine)),
-                *this
+                *this,
+                2.f
         );
     case SPEED:
         return std::make_unique<SpeedPowerUp>(
                 _game.powerUpTexture(selectedType),
                 sf::Vector2f(distX(_randomEngine), distY(_randomEngine)),
-                *this
+                *this,
+                2.f
         );
     default:
         return nullptr; // unreachable
